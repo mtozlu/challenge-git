@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test'
+﻿process.env.NODE_ENV = 'test'
 
 var tape = require('tape')
 var split = require('split2')
@@ -91,6 +91,21 @@ tape('should get echo', function (t) {
 
     t.equal(res.statusCode, 200, 'correct statusCode')
     t.deepEqual(res.body, {one: '1', two: '2'}, 'values should match')
+    t.end()
+  })
+})
+tape('should get reverse', function (t) {
+  var expected = {
+    input: 'stringtoreverse',
+    output: 'esreverotgnirts'
+  }
+
+  var url = '/reverse/' + expected.input
+  servertest(server(), url, {encoding: 'json'}, function (err, res) {
+    t.ifError(err, 'no error')
+
+    t.equal(res.statusCode, 200, 'correct statusCode')
+    t.deepEqual(res.body, expected, 'values should match')
     t.end()
   })
 })
